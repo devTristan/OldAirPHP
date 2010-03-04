@@ -3,6 +3,7 @@ date_default_timezone_set(@date_default_timezone_get()); //timezone E_STRICT ann
 
 function __autoload($class)
 	{
+	$checked = array();
 	$folders = array('system/libraries','system/core','application/controllers','application/models','system/helpers');
 	if (defined('CONFIG_LOADED'))
 		{
@@ -30,18 +31,27 @@ function __autoload($class)
 		{
 		$folders = array($predefined[$class]);
 		}
-	if (isset($file_noprefix))
-		{
-		$class = $file_noprefix;
-		}
 	foreach ($folders as $folder)
 		{
-		$file = $folder.'/'.$class.'.php';
+		$file = $folder.'/'.((isset($file_noprefix)) ? $file_noprefix :$class).'.php';
+		$checked[] = $file;
 		if (file_exists($file))
 			{
 			require_once($file);
 			break;
 			}
+		}
+	if (!class_exists($class))
+		{
+		echo "Couldn't find class $class<br/>\n";
+		echo "Checked the following locations:<br/>\n";
+		echo "<ul>\n";
+		foreach ($checked as $file)
+			{
+			echo "<li>$file</li>\n";
+			}
+		echo "</ul>";
+		//die();
 		}
 	}
 
@@ -67,5 +77,5 @@ s('damien')->define_constants();
 
 s('event')->trigger('initialize');
 
-codeigniter::library('email');
+s('CI')->email;
 

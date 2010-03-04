@@ -7,13 +7,16 @@ class console {
 		$file = $type.'/'.date('M j, Y').'.log';
 		$dirs = explode('/',$file);
 		array_pop($dirs);
-		$path = 'logs/';
+		$path = DIR_LOGS;
 		foreach ($dirs as $dir)
 			{
 			$path .= $dir;
-			@mkdir($path,0700);
+			if (!is_dir($path))
+				{
+				@mkdir($path,0770);
+				}
 			}
-		file_put_contents('logs/'.$file,$msg,FILE_APPEND);
+		file_put_contents(DIR_LOGS.$file,$msg,FILE_APPEND);
 		return $this;
 		}
 	public function error($str = null, $file = null, $line = null, $type = 'Error')
