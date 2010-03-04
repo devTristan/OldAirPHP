@@ -1,0 +1,4 @@
+Options +FollowSymlinks -MultiViews -Indexes
+RewriteEngine on
+
+RewriteRule ^(.*)$ public/$1
