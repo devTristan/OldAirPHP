@@ -42,7 +42,7 @@ class damien {
 			$path = array();
 			foreach ($parts as $part_id => $part)
 				{
-				$path[] = s('config')->dir[$part] ? s('config')->dir[$part] : $part; //loff
+				$path[] = (isset(s('config')->dir) && isset(s('config')->dir[$part])) ? s('config')->dir[$part] : $part; //loff
 				}
 			$constant_name = end($parts);
 			$path = implode('/',$path);
@@ -50,7 +50,7 @@ class damien {
 			}
 		
 		//URL: everything in REQUEST_URI minus the basedir as defined in the configuration
-		define('URL',substr($_SERVER['REQUEST_URI'],strlen(s('config')->host_basedir)+1));
+		define('URL',substr($_SERVER['REQUEST_URI'],strlen(s('config')->host['basedir'])+1));
 		
 		//URL_BASE: the relative path to the base directory for use in views
 		//If the URL is "cake", URL_BASE will be "./". If the URL is "cake/14", URL_BASE will be ../
