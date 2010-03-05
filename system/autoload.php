@@ -9,7 +9,6 @@ function __autoload($class)
 		$predefined = (s('config')->class_locations) ? s('config')->class_locations : array();
 		if (s('config')->compatibility['enabled'])
 			{
-			$folders[] = 'system/compatibility/'.$class;
 			foreach (s('config')->compatibility['class_prefixes'] as $prefix => $class_name)
 				{
 				if (substr($class,0,strlen($prefix)) == $prefix)
