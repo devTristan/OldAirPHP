@@ -1,6 +1,4 @@
 <?php
-date_default_timezone_set(@date_default_timezone_get()); //timezone E_STRICT annoying shitfix.
-
 require_once('system/autoload.php');
 
 //some shortcuts
@@ -12,7 +10,12 @@ function n($class) //stands for new
 	{
 	return classmanager::spawn(func_get_args());
 	}
-s('config'); //keep this here, there needs to be an instance of config
+
+foreach (s('config')->autoload_classes as $class)
+	{
+	s($class);
+	}
+unset($class);
 
 if (!s('config')->enabled)
 	{
