@@ -23,9 +23,6 @@ if (!s('config')->enabled)
 	}
 
 s('timing')->play('total');
-
-s('damien')->define_constants();
-
 s('event')->trigger('initialize');
 
 
