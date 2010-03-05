@@ -1,5 +1,5 @@
 <?php
-class cache_array {
+class cache_array extends driver {
 private $cache = array();
 	public function get($item)
 		{
@@ -11,7 +11,7 @@ private $cache = array();
 		}
 	public function set($item,$value)
 		{
-		if ($this->cache[$item] == $value)
+		if ($this->exists($item) && $this->cache[$item] == $value)
 			{
 			return false;
 			}

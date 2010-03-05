@@ -1,9 +1,13 @@
 <?php
-class cache_file {
-private $prefix = 'cache/cache_';
+class cache_file extends driver {
+private $prefix = 'cache_';
 private $delayed = array();
 private $lastwrite = 0;
 private $writedelay = 0;
+	public function __construct()
+		{
+		$this->prefix = DIR_CACHE.$this->prefix;
+		}
 	public function __destruct()
 		{
 		$this->process_delayed();

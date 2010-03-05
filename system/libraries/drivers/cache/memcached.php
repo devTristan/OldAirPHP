@@ -1,5 +1,5 @@
 <?php
-class cache_memcached {
+class cache_memcached extends driver {
 private $link;
 	public function __construct()
 		{
