@@ -9,7 +9,7 @@ function s($class) //stands for singleton
 	}
 function n($class) //stands for new
 	{
-	return classmanager::spawn(func_get_args());
+	return classmanager::new_instance(func_get_args());
 	}
 
 foreach (s('config')->autoload_classes as $class)
