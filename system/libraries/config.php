@@ -112,7 +112,6 @@ protected $conf = array();
 					elseif (!$value)
 						{
 						$value = '';
-						//s('console')->fatal_error('Expecting value for '.$field,$file,$line_number);
 						}
 					}
 				else
