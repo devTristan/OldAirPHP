@@ -51,7 +51,7 @@ function __autoload($class)
 			echo "<li>$file</li>\n";
 			}
 		echo "</ul>";
-		//die();
+		die();
 		}
 	}
 
@@ -77,5 +77,4 @@ s('damien')->define_constants();
 
 s('event')->trigger('initialize');
 
-s('CI')->email;
-
+//continue here
