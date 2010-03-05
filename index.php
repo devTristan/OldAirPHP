@@ -25,5 +25,4 @@ s('timing')->play('total')->set('total',microtime(true)-$overhead_start);
 s('timing')->pause('overhead')->set('overhead',microtime(true)-$overhead_start);
 s('event')->trigger('initialize');
 
-sleep(1);
-echo '<pre>'.print_r(s('timing')->table(),true).'</pre>';
+//continue here
