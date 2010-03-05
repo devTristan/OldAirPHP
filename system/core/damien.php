@@ -1,5 +1,9 @@
 <?php
 class damien {
+	public function __construct()
+		{
+		$this->define_constants();
+		}
 	public function define_constants()
 		{
 		/*
