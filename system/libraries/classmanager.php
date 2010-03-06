@@ -6,11 +6,11 @@ static private $instances = array();
 		$id = sha1(serialize($args));
 		if (!isset(self::$instances[$id]))
 			{
-			self::$instances[$id] = self::newinstance($args);
+			self::$instances[$id] = self::new_instance($args);
 			}
 		return self::$instances[$id];
 		}
-	static public function newinstance($args)
+	static public function new_instance($args)
 		{
 		$class = array_shift($args);
 		if ($class == 'ReflectionClass')
