@@ -40,9 +40,7 @@
 |
 */
 
-$route['default_controller'] = s('config')->default_controller;
-$route['scaffolding_trigger'] = s('config')->scaffolding_trigger;
-
+$route = s('config')->route;
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

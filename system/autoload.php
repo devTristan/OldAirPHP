@@ -6,27 +6,42 @@ function __autoload($class)
 	if (defined('CONFIG_LOADED'))
 		{
 		$folders = (s('config')->autoload_folders) ? s('config')->autoload_folders : $folders;
-		$predefined = (s('config')->class_locations) ? s('config')->class_locations : array();
-		if (s('config')->compatibility['enabled'])
+		if (defined('DIR_BASE'))
 			{
-			foreach (s('config')->compatibility['class_prefixes'] as $prefix => $class_name)
+			foreach ($folders as $key => $folder)
 				{
-				if (substr($class,0,strlen($prefix)) == $prefix)
+				$folders[$key] = DIR_BASE.$folder;
+				}
+			}
+		$predefined = (s('config')->class_locations) ? s('config')->class_locations : array();
+		if (isset($predefined[$class]))
+			{
+			$folders = array(((defined('DIR_BASE') ? DIR_BASE : '')).$predefined[$class]);
+			}
+		else
+			{
+			if (substr($class,0,strlen('controller_')) == 'controller_')
+				{
+				$folders = array(DIR_CONTROLLERS.substr($class,strlen('controller_')));
+				}
+			elseif (s('config')->compatibility['enabled'])
+				{
+				$type = classmanager::compatibility_type($class);
+				$prefix = classmanager::compatibility_prefix($class);
+				if ($type)
 					{
-					$folders = array();
-					foreach (s('config')->compatibility['autoload_folders'][$class_name] as $folder)
+					foreach (s('config')->compatibility['autoload_folders'][$type] as $folder)
 						{
-						$folders[] = DIR_COMPATIBILITY.$class_name.'/'.$folder;
+						$folders[] = DIR_COMPATIBILITY.$type.'/'.$folder;
 						}
 					$file_noprefix = substr($class,strlen($prefix));
-					break;
+					foreach (s('config')->compatibility['required_classes'][$type] as $needed)
+						{
+						__autoload($needed);
+						}
 					}
 				}
 			}
-		}
-	if (isset($predefined[$class]))
-		{
-		$folders = array($predefined[$class]);
 		}
 	foreach ($folders as $folder)
 		{

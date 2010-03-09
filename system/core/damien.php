@@ -33,9 +33,20 @@ class damien {
 		
 		//folders: the folders to be put into constants
 		//DIR_APPLICATION should be something like /var/www/application/, and so on
-		$folders = array('system/application','system/cache','system/config','system/helpers',
-				'system/libraries','system/logs','system/compatibility','public',
-				'system/application/controllers','system/application/models','system/application/views');
+		$folders = array(
+			'system/application',
+			'system/cache',
+			'system/config',
+			'system/helpers',
+			'system/libraries',
+			'system/logs',
+			'system/compatibility',
+			'system/application/controllers',
+			'system/application/models',
+			'system/application/views',
+			'system/application/errors',
+			'public'
+			);
 		foreach ($folders as $folder)
 			{
 			$parts = explode('/',$folder);
