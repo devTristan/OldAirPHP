@@ -20,11 +20,11 @@ function __autoload($class)
 			}
 		else
 			{
-			if (substr($class,0,strlen('controller_')) == 'controller_')
+			/*if (substr($class,0,strlen('controller_')) == 'controller_')
 				{
 				$folders = array(DIR_CONTROLLERS.substr($class,strlen('controller_')));
-				}
-			elseif (s('config')->compatibility['enabled'])
+				}*/
+			if (s('config')->compatibility['enabled'])
 				{
 				$type = classmanager::compatibility_type($class);
 				$prefix = classmanager::compatibility_prefix($class);
@@ -35,9 +35,12 @@ function __autoload($class)
 						$folders[] = DIR_COMPATIBILITY.$type.'/'.$folder;
 						}
 					$file_noprefix = substr($class,strlen($prefix));
-					foreach (s('config')->compatibility['required_classes'][$type] as $needed)
+					if (isset(s('config')->compatibility['required_classes'][$type]))
 						{
-						__autoload($needed);
+						foreach (s('config')->compatibility['required_classes'][$type] as $needed)
+							{
+							__autoload($needed);
+							}
 						}
 					}
 				}
@@ -45,7 +48,7 @@ function __autoload($class)
 		}
 	foreach ($folders as $folder)
 		{
-		$file = $folder.'/'.((isset($file_noprefix)) ? $file_noprefix :$class).'.php';
+		$file = $folder.'/'.((isset($file_noprefix)) ? $file_noprefix : $class).'.php';
 		$checked[] = $file;
 		if (file_exists($file))
 			{
@@ -55,14 +58,15 @@ function __autoload($class)
 		}
 	if (!class_exists($class))
 		{
-		echo "Couldn't find class $class<br/>\n";
-		echo "Checked the following locations:<br/>\n";
-		echo "<ul>\n";
+		$str = '';
+		$str .= "Couldn't find class $class<br/>\n";
+		$str .= "Checked the following locations:<br/>\n";
+		$str .= "<ol>\n";
 		foreach ($checked as $file)
 			{
-			echo "<li>$file</li>\n";
+			$str .= "<li>$file</li>\n";
 			}
-		echo "</ul>";
-		die();
+		$str .= "</ol>";
+		show_error($str);
 		}
 	}

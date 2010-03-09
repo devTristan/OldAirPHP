@@ -59,6 +59,7 @@ class CI_URI {
 	 */
 	function _fetch_uri_string()
 	{
+	$this->uri_string = URL;
 	return URL;
 		if (strtoupper($this->config->item('uri_protocol')) == 'AUTO')
 		{

@@ -187,9 +187,8 @@ function log_message($type,$msg = null)
 	}
 function show_error($msg,$status_code = 500)
 	{
-	//to be changed when framework has error handling
-	echo $status_code.' error: '.$msg;
-	die();
+	echo s('CI_Exceptions')->show_error('Error',$msg,'error_general',$status_code);
+	exit;
 	}
 function show_404($page = '')
 	{

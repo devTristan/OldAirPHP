@@ -41,10 +41,10 @@ class damien {
 			'system/libraries',
 			'system/logs',
 			'system/compatibility',
-			'system/application/controllers',
-			'system/application/models',
-			'system/application/views',
-			'system/application/errors',
+			'application/controllers',
+			'application/models',
+			'application/views',
+			'application/errors',
 			'public'
 			);
 		foreach ($folders as $folder)

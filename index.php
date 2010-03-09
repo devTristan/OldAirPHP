@@ -28,26 +28,19 @@ s('event')->trigger('initialize');
 //happily borrowed from codeigniter and ported a bit
 $class = s('CI_Router')->fetch_class();
 $method = s('CI_Router')->fetch_method();
-if (!class_exists($class)
-	|| $method == 'controller'
-	|| strncmp($method, '_', 1) == 0
-	|| in_array(strtolower($method), array_map('strtolower', get_class_methods($class)))
-	)
-	{
-	show_404("{$class}/{$method}");
-	}
+__autoload('controller_'.$class);
 
 s('timing')->play('[controller] '.$class.'/'.$method);
 
 // Is this a scaffolding request?
-if (s('CI_Router')->scaffolding_request === TRUE)
+if (s('CI_Router')->scaffolding_request === true)
 	{
 	s($class)->_ci_scaffolding();
 	}
 else
 	{
 	// Is there a "remap" function?
-	if (method_exists(s($class), '_remap'))
+	if (method_exists(s('controller_'.$class), '_remap'))
 		{
 		s($class)->_remap($method);
 		}
@@ -55,13 +48,13 @@ else
 		{
 		// is_callable() returns TRUE on some versions of PHP 5 for private and protected
 		// methods, so we'll use this workaround for consistent behavior
-		if (!in_array(strtolower($method), array_map('strtolower', get_class_methods(s($class)))))
+		if (!in_array(strtolower($method), array_map('strtolower', get_class_methods(s('controller_'.$class)))))
 			{
 			show_404("$class/$method");
 			}
 		// Call the requested method.
 		// Any URI segments present (besides the class/function) will be passed to the method for convenience
-		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+		call_user_func_array(array(s('controller_'.$class), $method), array_slice(s('CI_URI')->rsegments, 2));
 		}
 	}
 

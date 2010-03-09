@@ -66,6 +66,7 @@ class CI_Router {
 	{
 		// Are query strings enabled in the config file?
 		// If so, we're done since segment based URIs are not used with query strings.
+		
 		if ($this->config->item('enable_query_strings') === TRUE AND isset($_GET[$this->config->item('controller_trigger')]))
 		{
 			$this->set_class(trim($this->uri->_filter_uri($_GET[$this->config->item('controller_trigger')])));
@@ -82,7 +83,7 @@ class CI_Router {
 		@include(APPPATH.'config/routes'.EXT);
 		$this->routes = ( ! isset($route) OR ! is_array($route)) ? array() : $route;
 		unset($route);
-
+		
 		// Set the default controller so we can display it in the event
 		// the URI doesn't correlated to a valid controller.
 		$this->default_controller = ( ! isset($this->routes['default_controller']) OR $this->routes['default_controller'] == '') ? FALSE : strtolower($this->routes['default_controller']);	
@@ -155,7 +156,7 @@ class CI_Router {
 		{
 			return;
 		}
-						
+		
 		$this->set_class($segments[0]);
 		
 		if (isset($segments[1]))
@@ -198,14 +199,14 @@ class CI_Router {
 	function _validate_request($segments)
 	{
 		// Does the requested controller exist in the root folder?
-		if (file_exists(APPPATH.'controllers/'.$segments[0].EXT))
+		if (file_exists(DIR_CONTROLLERS.$segments[0].EXT))
 		{
 			return $segments;
 		}
-
+		
 		// Is the controller in a sub-folder?
 		if (is_dir(APPPATH.'controllers/'.$segments[0]))
-		{		
+		{
 			// Set the directory and remove it from the segment array
 			$this->set_directory($segments[0]);
 			$segments = array_slice($segments, 1);
@@ -213,7 +214,7 @@ class CI_Router {
 			if (count($segments) > 0)
 			{
 				// Does the requested controller exist in the sub-folder?
-				if ( ! file_exists(APPPATH.'controllers/'.$this->fetch_directory().$segments[0].EXT))
+				if (!file_exists(APPPATH.'controllers/'.$this->fetch_directory().$segments[0].EXT))
 				{
 					show_404($this->fetch_directory().$segments[0]);
 				}
@@ -234,7 +235,6 @@ class CI_Router {
 
 			return $segments;
 		}
-
 		// Can't find the requested controller...
 		show_404($segments[0]);
 	}
