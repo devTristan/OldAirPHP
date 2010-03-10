@@ -59,3 +59,5 @@ else
 	}
 
 s('timing')->pause('[controller] '.$class.'/'.$method);
+
+s('event')->trigger('shutdown');
