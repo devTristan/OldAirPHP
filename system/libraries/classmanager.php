@@ -23,40 +23,26 @@ static private $cache_compatibility_type = array();
 				}
 			return self::$instances[$id];
 			}
-		if (defined('CONFIG_LOADED'))
-			{
-			$id = sha1(serialize(array('config')));
-			if (isset(self::$instances[$id]) &&
-			isset(self::$instances[$id]->compatibility['required_classes']) &&
-			isset(self::$instances[$id]->compatibility['required_classes'][self::compatibility_type($class)])
-			)
-				{
-				foreach (self::$instances[sha1(serialize(array('config')))]->compatibility['required_classes'] as $required)
-					{
-					__autoload($required);
-					}
-				}
-			}
 		return call_user_func_array(array(self::single(array('ReflectionClass',$class)), 'newInstance'),$args);
 		}
-	static public function compatibility_type($class)
+	static public function class_type($class)
 		{
 		if (!isset(self::$cache_compatibility_type[$class]))
 			{
 			if (!defined('CONFIG_LOADED')) {return '';}
-			foreach (s('config')->compatibility['class_prefixes'] as $prefix => $type)
+			foreach (s('config')->classtypes as $type => $data)
 				{
-				if (substr($class,0,strlen($prefix)) == $prefix)
+				if (substr($class,0,strlen($data['prefix'])) == $data['prefix'])
 					{
-					self::$cache_compatibility_type[$class] = array($prefix,$type);
+					$compat = (isset($data['is_compatibility']) && $data['is_compatibility']) ? true : false;
+					self::$cache_compatibility_type[$class] = array($data['prefix'],$type,$compat);
 					break;
 					}
 				}
-			return '';
 			}
-		return self::$cache_compatibility_type[$class][1];
+		return (isset(self::$cache_compatibility_type[$class])) ? self::$cache_compatibility_type[$class][1] : '';
 		}
-	static public function compatibility_prefix($class)
+	static public function class_prefix($class)
 		{
 		if (isset(self::$cache_compatibility_type[$class]))
 			{
@@ -64,8 +50,20 @@ static private $cache_compatibility_type = array();
 			}
 		else
 			{
-			self::compatibility_type($class);
+			self::class_type($class);
 			return (isset(self::$cache_compatibility_type[$class])) ? self::$cache_compatibility_type[$class][0] : '';
+			}
+		}
+	static public function class_is_compatibility($class)
+		{
+		if (isset(self::$cache_compatibility_type[$class]))
+			{
+			return self::$cache_compatibility_type[$class][2];
+			}
+		else
+			{
+			self::class_type($class);
+			return (isset(self::$cache_compatibility_type[$class])) ? self::$cache_compatibility_type[$class][2] : false;
 			}
 		}
 	static public function set($name,$value)

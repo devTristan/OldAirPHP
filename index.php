@@ -25,9 +25,11 @@ s('timing')->play('total')->set('total',microtime(true)-$overhead_start);
 s('timing')->pause('overhead')->set('overhead',microtime(true)-$overhead_start);
 s('event')->trigger('initialize');
 
+s('timing')->play('CI Load');
 //happily borrowed from codeigniter and ported a bit
 $class = s('CI_Router')->fetch_class();
 $method = s('CI_Router')->fetch_method();
+s('timing')->pause('CI Load');
 __autoload('controller_'.$class);
 
 s('timing')->play('[controller] '.$class.'/'.$method);

@@ -36,6 +36,7 @@ protected $conf = array();
 		}
 	public function load($file)
 		{
+		s('timing')->play('[config] '.$file);
 		$handle = fopen($file, 'r');
 		$line_number = 0;
 		while (!feof($handle))
@@ -130,6 +131,7 @@ protected $conf = array();
 				}
 			}
 		fclose($handle);
+		s('timing')->pause('[config] '.$file);
 		return $this;
 		}
 	public function extend($name,$function)

@@ -2,9 +2,10 @@
 function __autoload($class)
 	{
 	$checked = array();
-	$folders = array('system/libraries','system/core','application/controllers','application/models','system/helpers');
+	$folders = array('system/libraries');
 	if (defined('CONFIG_LOADED'))
 		{
+		s('timing')->play('autoload');
 		$folders = (s('config')->autoload_folders) ? s('config')->autoload_folders : $folders;
 		if (defined('DIR_BASE'))
 			{
@@ -20,26 +21,34 @@ function __autoload($class)
 			}
 		else
 			{
-			/*if (substr($class,0,strlen('controller_')) == 'controller_')
+			$type = classmanager::class_type($class);
+			if (isset(s('config')->classtypes[$type]))
 				{
-				$folders = array(DIR_CONTROLLERS.substr($class,strlen('controller_')));
-				}*/
-			if (s('config')->compatibility['enabled'])
-				{
-				$type = classmanager::compatibility_type($class);
-				$prefix = classmanager::compatibility_prefix($class);
-				if ($type)
+				$prefix = classmanager::class_prefix($class);
+				$is_compat = classmanager::class_is_compatibility($class);
+				$file_noprefix = substr($class,strlen($prefix));
+				if (isset(s('config')->classtypes[$type]['required']))
 					{
-					foreach (s('config')->compatibility['autoload_folders'][$type] as $folder)
+					foreach (s('config')->classtypes[$type]['required'] as $needed)
 						{
-						$folders[] = DIR_COMPATIBILITY.$type.'/'.$folder;
+						__autoload($needed);
 						}
-					$file_noprefix = substr($class,strlen($prefix));
-					if (isset(s('config')->compatibility['required_classes'][$type]))
+					}
+				if (isset(s('config')->classtypes[$type]['autoload_folders']))
+					{
+					$folders = array();
+					if ($is_compat)
 						{
-						foreach (s('config')->compatibility['required_classes'][$type] as $needed)
+						foreach (s('config')->classtypes[$type]['autoload_folders'] as $folder)
 							{
-							__autoload($needed);
+							$folders[] = DIR_COMPATIBILITY.$type.'/'.$folder;
+							}
+						}
+					else
+						{
+						foreach (s('config')->classtypes[$type]['autoload_folders'] as $folder)
+							{
+							$folders[] = DIR_BASE.$folder;
 							}
 						}
 					}
@@ -67,6 +76,11 @@ function __autoload($class)
 			$str .= "<li>$file</li>\n";
 			}
 		$str .= "</ol>";
-		show_error($str);
+		//show_error($str);
+		echo $str;
+		}
+	if (defined('CONFIG_LOADED'))
+		{
+		s('timing')->pause('autoload');
 		}
 	}

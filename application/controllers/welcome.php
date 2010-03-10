@@ -1,7 +1,10 @@
 <?php
-class controller_welcome {
-	public function index()
+class controller_welcome extends controller {
+	function index()
 		{
-		echo 'Hi there.';
+		s('views')->show_view('welcome_message');
 		}
 }
+
+/* End of file welcome.php */
+/* Location: ./system/application/controllers/welcome.php */
