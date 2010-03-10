@@ -40,25 +40,25 @@ protected $conf = array();
 		$line_number = 0;
 		while (!feof($handle))
 			{
-			$line = fgets($handle);
-			$line = trim($line);
+			$line = rtrim(fgets($handle),"\n");
 			$line_number++;
-		
 			$pos = strrpos($line,'//');
 			if ($pos !== false)
 				{
 				$line = substr($line,0,$pos);
 				}
-		
+			$blank_value = (substr($line,-2) == ': ') ? true : false;
+			$line = trim($line);
 			if ($line)
 				{
-				$sep = strpos($line,':');
-				if ($sep)
+				$sep = strpos($line,': ');
+				if ($sep || $blank_value)
 					{
-					$field = substr($line,0,$sep);
-					$value = substr($line,$sep+1);
-					if ($field && $value)
+					$field = ($blank_value) ? substr($line,0,strlen($line)-1) : substr($line,0,$sep);
+					$value = ($blank_value) ? '' : substr($line,$sep+2);
+					if ($field)
 						{
+						//if (!$value) {$value = '';}
 						$field = trim($field);
 						$value = trim($value);
 						$field = explode('.',$field);
@@ -105,13 +105,9 @@ protected $conf = array();
 							}
 						$tmp = $value;
 						}
-					elseif (!$field)
+					else
 						{
 						s('console')->fatal_error('Expecting field name',$file,$line_number);
-						}
-					elseif (!$value)
-						{
-						$value = '';
 						}
 					}
 				else
