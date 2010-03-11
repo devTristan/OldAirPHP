@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome to CodeIgniter</title>
+<title>Welcome to <?php echo s('config')->framework_name.' '.s('config')->framework_version; ?></title>
 
 <style type="text/css">
 
@@ -55,7 +55,7 @@ code {
 <p>The corresponding controller for this page is found at:</p>
 <code><?php echo DIR_CONTROLLERS; ?>welcome.php</code>
 
-<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+<p>If you are exploring <?php echo s('config')->framework_name; ?> for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
 
 <p><br />Page rendered in <?php echo number_format(s('timing')->elapsed('total'),4); ?> seconds</p>
 
