@@ -14,12 +14,14 @@ class damien {
 			DIR_CONFIG: /var/www/config/
 			DIR_HELPERS: /var/www/helpers/
 			DIR_LIBRARIES: /var/www/libraries/
+			DIR_DRIVERS: /var/www/libraries/drivers/
 			DIR_LOGS: /var/www/logs/
 			DIR_PUBLIC: /var/www/public/
 			DIR_COMPATIBILITY: /var/www/compatibility/
 			DIR_CONTROLLERS: /var/www/application/controllers/
 			DIR_MODELS: /var/www/application/models/
 			DIR_VIEWS: /var/www/application/views/
+			DIR_ERRORS: /var/www/application/errors/
 			URL: class/method/param1/param2
 			URL_BASE: ../../../
 		*/
@@ -39,6 +41,7 @@ class damien {
 			'system/config',
 			'system/helpers',
 			'system/libraries',
+			'system/libraries/drivers',
 			'system/logs',
 			'system/compatibility',
 			'application/controllers',
