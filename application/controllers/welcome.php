@@ -5,6 +5,3 @@ class controller_welcome extends controller {
 		s('views')->show_view('welcome_message');
 		}
 }
-
-/* End of file welcome.php */
-/* Location: ./system/application/controllers/welcome.php */
