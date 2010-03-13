@@ -1,0 +1,3 @@
+default_controller: welcome
+welcome.css: welcome/css
+scaffolding_trigger: 

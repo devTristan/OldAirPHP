@@ -5,7 +5,7 @@ public $conf = array();
 	public function __construct($file = 'damien')
 		{
 		$this->extend('include',array($this,'_include'));
-		$this->load('system/config/'.$file.'.conf');
+		$this->load($file);
 		$this->set_iterator('conf');
 		if (!defined('CONFIG_LOADED')) {define('CONFIG_LOADED',true);}
 		}
@@ -32,10 +32,26 @@ public $conf = array();
 		}
 	public function _include($file)
 		{
-		$this->load('system/config/'.$file);
+		$this->load($file);
 		}
 	public function load($file)
 		{
+		if (file_exists('system/config/'.$file.'.conf'))
+			{
+			$file = 'system/config/'.$file.'.conf';
+			$strmode = false;
+			}
+		elseif (file_exists('system/config/'.$file.'.strconf'))
+			{
+			$strmode_base = $file;
+			$file = 'system/config/'.$file.'.strconf';
+			$strmode = true;
+			}
+		else
+			{
+			echo 'No such config file: '.$file,'<br/><pre>'.print_r(debug_backtrace(),true).'</pre>';
+			exit;
+			}
 		s('timing')->play('[config] '.$file);
 		$handle = fopen($file, 'r');
 		$line_number = 0;
@@ -59,10 +75,9 @@ public $conf = array();
 					$value = ($blank_value) ? '' : substr($line,$sep+2);
 					if ($field)
 						{
-						//if (!$value) {$value = '';}
 						$field = trim($field);
 						$value = trim($value);
-						$field = explode('.',$field);
+						$field = ($strmode) ? array($strmode_base,$field) : explode('.',$field);
 						$tmp = &$this->conf;
 						foreach ($field as $seg)
 							{

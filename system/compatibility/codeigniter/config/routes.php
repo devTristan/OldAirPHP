@@ -40,7 +40,7 @@
 |
 */
 
-$route = s('config')->route;
+$route = s('config')->routes;
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */
