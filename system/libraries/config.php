@@ -1,13 +1,13 @@
 <?php
 class config extends simple_iterator {
 private $functions = array();
-protected $conf = array();
-	public function __construct()
+public $conf = array();
+	public function __construct($file = 'damien')
 		{
 		$this->extend('include',array($this,'_include'));
-		$this->load('system/config/damien.conf');
+		$this->load('system/config/'.$file.'.conf');
 		$this->set_iterator('conf');
-		define('CONFIG_LOADED',true);
+		if (!defined('CONFIG_LOADED')) {define('CONFIG_LOADED',true);}
 		}
 	public function __get($var)
 		{
