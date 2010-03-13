@@ -1,41 +1,45 @@
 <?php
 class cache extends has_drivers {
-private $methods = array();
+private $drivers = array();
 private $prefix;
 	public function __construct($dummy1,$dummy2)
 		{
 		$args = func_get_args();
 		$this->prefix = 'damien_'.array_shift($args).'_';
 		if (count($args) == 1 && is_array($args[0])) {$args = $args[0];}
-		$this->methods = $args;
+		$this->drivers = $args;
 		}
 	public function __get($item)
 		{
 		$item = $this->prefix.$item;
-		$old = $item;
+		$item = sha1($item);
 		$lineup = array();
-		foreach ($this->methods as $method)
+		foreach ($this->drivers as $driver)
 			{
-			$value = $this->driver($method)->get($item);
+			$value = $this->driver($driver)->get($item);
 			if ($value !== false)
 				{
-				foreach ($lineup as $method)
+				foreach ($lineup as $driver2)
 					{
-					$this->driver($method)->set($item,$value);
+					$this->driver($driver2)->set($item,$value);
 					}
 				return $value;
 				}
-			$lineup[] = $method;
+			$lineup[] = $driver;
 			}
 		return false;
 		}
 	public function __set($item,$value)
 		{
+		$this->set($item,$value);
+		}
+	public function set($item,$value,$time = -1)
+		{
 		$item = $this->prefix.$item;
-		$old = $item;
-		foreach ($this->methods as $method)
+		$item = sha1($item);
+		foreach ($this->drivers as $driver)
 			{
-			if (!$this->driver($method)->set($item,$value))
+			if (!$this->driver($driver)->set($item,$value,$time))
 				{
 				break;
 				}
@@ -44,12 +48,12 @@ private $prefix;
 	public function __isset($item)
 		{
 		$item = $this->prefix.$item;
-		foreach ($this->methods as $method)
+		$item = sha1($item);
+		foreach ($this->drivers as $driver)
 			{
-			$value = $this->driver($method)->exists($item);
-			if ($value !== false)
+			if ($this->driver($driver)->exists($item))
 				{
-				return $value;
+				return true;
 				}
 			}
 		return false;
@@ -57,16 +61,17 @@ private $prefix;
 	public function __unset($item)
 		{
 		$item = $this->prefix.$item;
-		foreach ($this->methods as $method)
+		$item = sha1($item);
+		foreach ($this->drivers as $driver)
 			{
-			$this->driver($method)->remove($item);
+			$this->driver($driver)->remove($item);
 			}
 		}
 	public function clear()
 		{
-		foreach ($this->methods as $method)
+		foreach ($this->drivers as $driver)
 			{
-			$this->driver($method)->clear();
+			$this->driver($driver)->clear();
 			}
 		}
 }

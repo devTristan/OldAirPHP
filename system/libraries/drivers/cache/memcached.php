@@ -9,9 +9,10 @@ private $link;
 		{
 		return memcache_get($this->link, $item);
 		}
-	public function set($item,$value)
+	public function set($item,$value,$time = -1)
 		{
-		memcache_set($this->link, $item, $value, 0, 2592000);
+		if ($time == -1) {$time = 2592000;}
+		memcache_set($this->link, $item, $value, 0, $time);
 		return true;
 		}
 	public function exists($item)
