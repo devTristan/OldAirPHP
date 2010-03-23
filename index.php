@@ -2,16 +2,7 @@
 error_reporting(E_ALL);
 $overhead_start = microtime(true);
 require_once('system/autoload.php');
-//some shortcuts
-function s($class) //stands for singleton
-	{
-	return classmanager::single(func_get_args());
-	}
-function n($class) //stands for new
-	{
-	return classmanager::new_instance(func_get_args());
-	}
-
+require_once('system/functions.php');
 foreach (s('config')->autoload_classes as $class)
 	{
 	s($class);
@@ -30,36 +21,31 @@ s('timing')->play('CI Load');
 $class = s('CI_Router')->fetch_class();
 $method = s('CI_Router')->fetch_method();
 s('timing')->pause('CI Load');
-__autoload('controller_'.$class);
 
+s('output')->start()->header('Content-Type','text/html');
+__autoload('controller_'.$class);
 s('timing')->play('[controller] '.$class.'/'.$method);
 
-// Is this a scaffolding request?
 if (s('CI_Router')->scaffolding_request === true)
 	{
 	s($class)->_ci_scaffolding();
 	}
 else
 	{
-	// Is there a "remap" function?
 	if (method_exists(s('controller_'.$class), '_remap'))
 		{
 		s($class)->_remap($method);
 		}
 	else
 		{
-		// is_callable() returns TRUE on some versions of PHP 5 for private and protected
-		// methods, so we'll use this workaround for consistent behavior
 		if (!in_array(strtolower($method), array_map('strtolower', get_class_methods(s('controller_'.$class)))))
 			{
 			show_404("$class/$method");
 			}
-		// Call the requested method.
-		// Any URI segments present (besides the class/function) will be passed to the method for convenience
 		call_user_func_array(array(s('controller_'.$class), $method), array_slice(s('CI_URI')->rsegments, 2));
 		}
 	}
 
 s('timing')->pause('[controller] '.$class.'/'.$method);
-
 s('event')->trigger('shutdown');
+s('output')->end();

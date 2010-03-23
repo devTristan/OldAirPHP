@@ -6,7 +6,6 @@ class controller_welcome extends controller {
 		}
 	function css()
 		{
-		header('Content-Type: text/css');
 		s('views')->show_view('welcome');
 		}
 }

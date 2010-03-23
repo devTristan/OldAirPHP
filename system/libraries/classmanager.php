@@ -23,7 +23,9 @@ static private $cache_compatibility_type = array();
 				}
 			return self::$instances[$id];
 			}
-		return call_user_func_array(array(self::single(array('ReflectionClass',$class)), 'newInstance'),$args);
+		return ($args)
+			? self::single(array('ReflectionClass',$class))->newInstanceArgs($args)
+			: new $class;
 		}
 	static public function class_type($class)
 		{

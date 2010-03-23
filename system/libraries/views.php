@@ -6,8 +6,8 @@ private $scope = false;
 		{
 		$this->data = $data;
 		unset($data);
-		$__folder = substr($file,0,strrpos($file,'/')).'/';
-		if ($__folder == '/') {$__folder = '';}
+		$folder = substr($file,0,strrpos($file,'/')).'/';
+		if ($folder == '/') {$folder = '';}
 		$files = glob("application/views/$file.*");
 		if (!$files || !isset($files[0]))
 			{
@@ -41,6 +41,11 @@ private $scope = false;
 			}
 		unset($var);
 		unset($value);
-		include((($parsed) ? DIR_CACHE.'view_' : DIR_VIEWS).$__folder.$file);
+		$ext = substr($file,strrpos($file,'.')+1);
+		s('output')->header('Content-Type',
+			(isset(s('config','mimes')->$ext))
+				? s('config','mimes')->$ext
+				: s('config','mimes')->_default);
+		include((($parsed) ? DIR_CACHE.'view_' : DIR_VIEWS).$folder.$file);
 		}
 }
