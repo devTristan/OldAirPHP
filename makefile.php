@@ -171,7 +171,7 @@ class Snoopy
 					return false;
 				if(function_exists("is_executable"))
 				    if (!is_executable($this->curl_path))
-				        return false;
+					return false;
 				$this->host = $URI_PARTS["host"];
 				if(!empty($URI_PARTS["port"]))
 					$this->port = $URI_PARTS["port"];
@@ -330,7 +330,7 @@ class Snoopy
 					return false;
 				if(function_exists("is_executable"))
 				    if (!is_executable($this->curl_path))
-				        return false;
+					return false;
 				$this->host = $URI_PARTS["host"];
 				if(!empty($URI_PARTS["port"]))
 					$this->port = $URI_PARTS["port"];
@@ -850,10 +850,10 @@ class Snoopy
 		
 			if(preg_match("|^HTTP/|",$currentHeader))
 			{
-                if(preg_match("|^HTTP/[^\s]*\s(.*?)\s|",$currentHeader, $status))
+		if(preg_match("|^HTTP/[^\s]*\s(.*?)\s|",$currentHeader, $status))
 				{
 					$this->status= $status[1];
-                }				
+		}				
 				$this->response_code = $currentHeader;
 			}
 				
@@ -864,7 +864,7 @@ class Snoopy
 		do {
     		$_data = fread($fp, $this->maxlength);
     		if (strlen($_data) == 0) {
-        		break;
+			break;
     		}
     		$results .= $_data;
 		} while(true);
@@ -1224,13 +1224,13 @@ function say($str)
 	}
 function fetch_url_proxy($url)
 	{
-        $snoopy = new Snoopy;
-       /* $snoopy->agent = "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)";
-        $snoopy->proxy_host = "proxy.sbschools.net";
-        $snoopy->proxy_port = "8080";
-        $snoopy->proxy_user = "harrisj";
-        $snoopy->proxy_pass = "jasmineharris";*/
-        return ($snoopy->fetch($url)) ? $snoopy->results : false;
+	$snoopy = new Snoopy;
+	/* $snoopy->agent = "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)";
+	$snoopy->proxy_host = "proxy.sbschools.net";
+	$snoopy->proxy_port = "8080";
+	$snoopy->proxy_user = "harrisj";
+	$snoopy->proxy_pass = "jasmineharris";*/
+	return ($snoopy->fetch($url)) ? $snoopy->results : false;
 	}
 function rcopy($src,$dst)
 	{
