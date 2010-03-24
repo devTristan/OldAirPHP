@@ -5,12 +5,13 @@ require_once 'system/core/autoload.php';
 require_once 'system/core/functions.php';
 require_once 'system/core/damien.php';
 s('damien');
+$overhead_end = microtime(true);
+s('timing')->play('total')->set('total',$overhead_end-$overhead_start);
+s('timing')->pause('overhead')->set('overhead',$overhead_end-$overhead_start);
 if (!s('config')->enabled)
 	{
 	show_error(503);
 	}
-s('timing')->play('total')->set('total',microtime(true)-$overhead_start);
-s('timing')->pause('overhead')->set('overhead',microtime(true)-$overhead_start);
 foreach (s('config')->autoload_classes as $class)
 	{
 	s($class);
@@ -49,4 +50,3 @@ else
 
 s('timing')->pause('[controller] '.$class.'/'.$method);
 s('event')->trigger('shutdown');
-s('output')->end();
