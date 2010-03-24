@@ -1,10 +1,47 @@
 <?php
 class damien {
+private $error_level = 1;
+public $error_levels = array(
+	'default'		=> 'Error',
+	E_ERROR			=> 'Error',
+	E_WARNING		=> 'Warning',
+	E_PARSE			=> 'Parsing Error',
+	E_NOTICE		=> 'Notice',
+	E_CORE_ERROR		=> 'Core Error',
+	E_CORE_WARNING		=> 'Core Warning',
+	E_COMPILE_ERROR		=> 'Compile Error',
+	E_COMPILE_WARNING	=> 'Compile Warning',
+	E_USER_ERROR		=> 'User Error',
+	E_USER_WARNING		=> 'User Warning',
+	E_USER_NOTICE		=> 'User Notice',
+	E_STRICT		=> 'Runtime Notice'
+	);
 	public function __construct()
 		{
 		$this->define_constants();
+		set_error_handler(array($this,'error_handler'));
+		set_exception_handler(array($this,'exception_handler'));
 		}
-	public function define_constants()
+	public function error_name($level)
+		{
+		return (isset($this->error_levels[$level])) ? $this->error_levels[$level] : $this->error_levels['default'];
+		}
+	public function error_level($level = null)
+		{
+		if ($level === null) {return $this->error_level;} else {$this->error_level = $level;}
+		}
+	public function error_handler($severity, $message, $filename, $lineno)
+		{
+		if (!error_reporting() || $severity < $this->error_level) {return;}
+		throw new ErrorException($message, 0, $severity, $filename, $lineno);
+		}
+	public function exception_handler($exception)
+		{
+		S('views')->show_view('errors/php',array(
+			'exception' => $exception
+			));
+		}
+	private function define_constants()
 		{
 		/*
 		The following constants will be set, and here are some typical values:

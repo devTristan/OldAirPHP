@@ -2,10 +2,19 @@
 class views {
 private $data = array();
 private $scope = false;
+	public function view_exists($file)
+		{
+		$files = glob("application/views/$file.*");
+		return ($files && isset($files[0]));
+		}
 	public function show_view($file,$data = array())
 		{
 		$this->data = $data;
 		unset($data);
+		$this->include_view($file,true);
+		}
+	public function include_view($file,$header = false)
+		{
 		$folder = substr($file,0,strrpos($file,'/')).'/';
 		if ($folder == '/') {$folder = '';}
 		$files = glob("application/views/$file.*");
@@ -41,11 +50,15 @@ private $scope = false;
 			}
 		unset($var);
 		unset($value);
-		$ext = substr($file,strrpos($file,'.')+1);
-		s('output')->header('Content-Type',
-			(isset(s('config','mimes')->$ext))
-				? s('config','mimes')->$ext
-				: s('config','mimes')->_default);
+		if ($header)
+			{
+			$ext = substr($file,strrpos($file,'.')+1);
+			s('output')->header('Content-Type',
+				(isset(s('config','mimes')->$ext))
+					? s('config','mimes')->$ext
+					: s('config','mimes')->_default);
+			}
+		unset($header);
 		include((($parsed) ? DIR_CACHE.'view_' : DIR_VIEWS).$folder.$file);
 		}
 }

@@ -1,5 +1,5 @@
 <?php
-function __autoload($class)
+function damien_autoload($class)
 	{
 	$checked = array();
 	$folders = array('system/libraries');
@@ -31,7 +31,7 @@ function __autoload($class)
 					{
 					foreach (s('config')->classtypes[$type]['required'] as $needed)
 						{
-						__autoload($needed);
+						damien_autoload($needed);
 						}
 					}
 				if (isset(s('config')->classtypes[$type]['autoload_folders']))
@@ -76,11 +76,12 @@ function __autoload($class)
 			$str .= "<li>$file</li>\n";
 			}
 		$str .= "</ol>";
-		//show_error($str);
-		echo $str;
+		show_error($str);
+		//echo $str;
 		}
 	if (defined('CONFIG_LOADED'))
 		{
 		s('timing')->pause('autoload');
 		}
 	}
+spl_autoload_register('damien_autoload');

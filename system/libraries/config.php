@@ -11,7 +11,7 @@ public $conf = array();
 		}
 	public function __get($var)
 		{
-		return $this->conf[$var];
+		return isset($this->conf[$var]) ? $this->conf[$var] : array();
 		}
 	public function __isset($var)
 		{
@@ -49,7 +49,7 @@ public $conf = array();
 			}
 		else
 			{
-			echo 'No such config file: '.$file,'<br/><pre>'.print_r(debug_backtrace(),true).'</pre>';
+			show_error('No such config file exists: '.$file);
 			exit;
 			}
 		s('timing')->play('[config] '.$file);

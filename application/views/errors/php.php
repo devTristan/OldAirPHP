@@ -2,33 +2,14 @@
 <head>
 <title>PHP Error</title>
 <style type="text/css">
-body {
-background-color: #fff;
-margin:	40px;
-font-family: Lucida Grande, Verdana, Sans-serif;
-font-size: 12px;
-color: #000;
-}
-#content {
-border: #999 1px solid;
-background-color: #fff;
-padding: 20px 20px 12px 20px;
-}
-h1 {
-font-weight: normal;
-font-size: 14px;
-color: #990000;
-margin: 0 0 4px 0;
-}
+<?php s('views')->include_view('damien'); ?>
 </style>
 </head>
 <body>
-	<div id="content">
-		<h1>A PHP Error was encountered</h1>
-		<p>Severity: <?php echo $severity; ?></p>
-		<p>Message: <?php echo $message; ?></p>
-		<p>Filename: <?php echo $filepath; ?></p>
-		<p>Line Number: <?php echo $line; ?></p>
-	</div>
+<h1>A PHP Error was encountered</h1>
+<p>Severity: <?php echo s('damien')->error_name($exception->getSeverity()); ?></p>
+<p>Message: <?php echo $exception->getMessage(); ?></p>
+<p>Filename: <?php echo $exception->getFile(); ?></p>
+<p>Line Number: <?php echo $exception->getLine(); ?></p>
 </body>
 </html>

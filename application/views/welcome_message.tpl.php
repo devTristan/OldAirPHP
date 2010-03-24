@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Welcome to <?php echo s('config')->framework_name.' '.s('config')->framework_version; ?></title>
-<link rel="stylesheet" href="<?php echo URL_BASE.'welcome.css'; ?>" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="<?php echo URL_BASE.'damien.css'; ?>" type="text/css" media="screen" charset="utf-8" />
 </head>
 <body>
 

@@ -23,9 +23,12 @@ static private $cache_compatibility_type = array();
 				}
 			return self::$instances[$id];
 			}
-		return ($args)
-			? self::single(array('ReflectionClass',$class))->newInstanceArgs($args)
-			: new $class;
+		switch (count($args))
+			{
+			case 0: return new $class;
+			case 1: return new $class($args[0]);
+			default: return self::single(array('ReflectionClass',$class))->newInstanceArgs($args);
+			}
 		}
 	static public function class_type($class)
 		{
