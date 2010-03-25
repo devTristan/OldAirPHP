@@ -20,15 +20,15 @@ unset($class);
 s('event')->trigger('initialize');
 
 s('timing')->play('CI Load');
-$class = s('CI_Router')->fetch_class();
-$method = s('CI_Router')->fetch_method();
+$class = s('router')->fetch_class();
+$method = s('router')->fetch_method();
 s('timing')->pause('CI Load');
 
 s('output')->start()->header('Content-Type','text/html');
 damien_autoload('controller_'.$class);
 s('timing')->play('[controller] '.$class.'/'.$method);
 
-if (s('CI_Router')->scaffolding_request === true) //this next bit happily borrowed from codeigniter and ported a bit
+if (s('router')->scaffolding_request === true) //this next bit happily borrowed from codeigniter and ported a bit
 	{
 	s($class)->_ci_scaffolding();
 	}
@@ -44,7 +44,7 @@ else
 			{
 			show_404("$class/$method");
 			}
-		call_user_func_array(array(s('controller_'.$class), $method), array_slice(s('CI_URI')->rsegments, 2));
+		call_user_func_array(array(s('controller_'.$class), $method), array_slice(s('uri')->rsegments, 2));
 		}
 	}
 
