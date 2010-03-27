@@ -1,4 +1,3 @@
 <?php
-abstract class driver {
-	
+abstract class driver extends has_drivers {
 }

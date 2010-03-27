@@ -5,8 +5,7 @@ function damien_autoload($class)
 	$folders = array('system/libraries');
 	if (defined('CONFIG_LOADED'))
 		{
-		s('timing')->play('autoload');
-		$folders = (s('config')->autoload_folders) ? s('config')->autoload_folders : $folders;
+		$folders = (s('config')->autoload_folders) ? array_merge($folders,s('config')->autoload_folders) : $folders;
 		if (defined('DIR_BASE'))
 			{
 			foreach ($folders as $key => $folder)
@@ -77,11 +76,6 @@ function damien_autoload($class)
 			}
 		$str .= "</ol>";
 		show_error($str);
-		//echo $str;
-		}
-	if (defined('CONFIG_LOADED'))
-		{
-		s('timing')->pause('autoload');
 		}
 	}
 spl_autoload_register('damien_autoload');

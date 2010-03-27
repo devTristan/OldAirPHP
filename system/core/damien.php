@@ -63,6 +63,9 @@ public $error_levels = array(
 			URL_BASE: ../../../
 		*/
 		
+		//EXT should be .php
+		define('EXT',substr(__FILE__,strrpos(__FILE__,'.')));
+		
 		//publicdir: the directory of the public folder, where the entry point is
 		$publicdir = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/'));
 		
@@ -87,17 +90,18 @@ public $error_levels = array(
 			'application/errors',
 			'public'
 			);
+		
 		foreach ($folders as $folder)
 			{
-			$parts = explode('/',$folder);
+			/*$parts = explode('/',$folder);
 			$path = array();
 			foreach ($parts as $part_id => $part)
 				{
 				$path[] = (isset(s('config')->dir) && isset(s('config')->dir[$part])) ? s('config')->dir[$part] : $part; //loff
-				}
-			$constant_name = end($parts);
-			$path = implode('/',$path);
-			define('DIR_'.strtoupper($constant_name),DIR_BASE.$path.'/');
+				}*/
+			$constant_name = end(explode('/',$folder));
+			//$path = implode('/',$path);
+			define('DIR_'.strtoupper($constant_name),DIR_BASE.$folder.'/');
 			}
 		
 		//URL: everything in REQUEST_URI minus the basedir as defined in the configuration
@@ -109,8 +113,5 @@ public $error_levels = array(
 		//variable substr_count used so that it doesn't have to be run twice
 		$substr_count = substr_count(URL,'/');
 		define('URL_BASE',($substr_count) ? str_repeat('../',$substr_count) : './');
-		
-		//EXT should be .php
-		define('EXT',substr(__FILE__,strrpos(__FILE__,'.')));
 		}
 }

@@ -54,9 +54,9 @@ private $scope = false;
 			{
 			$ext = substr($file,strrpos($file,'.')+1);
 			s('output')->header('Content-Type',
-				(isset(s('config','mimes')->$ext))
-					? s('config','mimes')->$ext
-					: s('config','mimes')->_default);
+				(isset(s('config')->mimes[$ext]))
+					? s('config')->mimes[$ext]
+					: s('config')->mimes['_default']);
 			}
 		unset($header);
 		include((($parsed) ? DIR_CACHE.'view_' : DIR_VIEWS).$folder.$file);

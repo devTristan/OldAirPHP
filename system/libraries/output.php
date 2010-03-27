@@ -1,17 +1,33 @@
 <?php
-class output extends library {
+class output {
 private $headers = array();
 	public function start()
 		{
 		ob_start();
-		$this->hook('shutdown','end');
 		return $this;
 		}
 	public function end()
 		{
 		foreach ($this->headers as $field => $value)
 			{
-			header((($field == 'Status') ? '' : $field.': ') . $value);
+			if ($field == 'Status')
+				{
+				$server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : false;
+				$prefix = (substr(php_sapi_name(), 0, 3) == 'cgi') ? 'Status:' : (($server_protocol == 'HTTP/1.0') ? 'HTTP/1.0' : 'HTTP/1.1');
+				if (is_numeric($value))
+					{
+					$code = $value;
+					}
+				else
+					{
+					$code = (int) substr($value,0,3);
+					}
+				header($prefix.' '.$value,true,$code);
+				}
+			else
+				{
+				header($field.': '.$value,true);
+				}
 			}
 		ob_end_flush();
 		return $this;

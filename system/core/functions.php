@@ -21,19 +21,19 @@ function show_error($message = '',$type = 'general')
 		elseif (is_numeric($message))
 			{
 			$type = $message;
-			$message = (isset(s('config','error')->error_message[$type])) ? s('config','error')->error_message[$type] : 'A fatal error has occured.';
+			$message = (isset(s('config')->error['error_message'][$type])) ? s('config')->error['error_message'][$type] : 'A fatal error has occured.';
 			}
 		}
 	$view = (file_exists('errors/'.$type)) ? 'errors/'.$type : 'errors/general';
 	if (is_numeric($type))
 		{
-		set_status_header($type);
+		s('output')->header($type);
 		}
 	s('views')->show_view($view,array(
-		'heading' => (isset(s('config','error')->error_title) && isset(s('config','error')->error_title[$type]))
-				? s('config','error')->error_title[$type]
-				: ((isset(s('config','error')->error_header[$type]))
-					? s('config','error')->error_header[$type]
+		'heading' => (isset(s('config')->error['error_title']) && isset(s('config')->error['error_title'][$type]))
+				? s('config')->error['error_title'][$type]
+				: ((isset(s('config')->error['error_header'][$type]))
+					? s('config')->error['error_header'][$type]
 					: 'Error'),
 		'message' => $message
 		));

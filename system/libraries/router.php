@@ -20,7 +20,6 @@ public $error_routes = array();
 public $class = '';
 public $method = 'index';
 public $directory = '';
-public $uri_protocol = 'auto';
 public $default_controller;
 public $scaffolding_request = false; // Must be set to FALSE
 
@@ -48,12 +47,10 @@ public $scaffolding_request = false; // Must be set to FALSE
 	private function _set_routing()
 		{
 		// Load the routes file.
-		$this->routes = s('config','routes')->routes;
-		
+		$this->routes = s('config')->routes;
 		// Set the default controller so we can display it in the event
 		// the URI doesn't correlated to a valid controller.
 		$this->default_controller = ( ! isset($this->routes['default_controller']) OR $this->routes['default_controller'] == '') ? FALSE : strtolower($this->routes['default_controller']);	
-		
 		// Fetch the complete URI string
 		s('uri')->_fetch_uri_string();
 	
@@ -64,11 +61,9 @@ public $scaffolding_request = false; // Must be set to FALSE
 				{
 				show_error("Unable to determine what should be displayed. A default route has not been specified in the routing file.");
 				}
-			
 			if (strpos($this->default_controller, '/') !== FALSE)
 				{
 				$x = explode('/', $this->default_controller);
-
 				$this->set_class(end($x));
 				$this->set_method('index');
 				$this->_set_request($x);
@@ -79,11 +74,8 @@ public $scaffolding_request = false; // Must be set to FALSE
 				$this->set_method('index');
 				$this->_set_request(array($this->default_controller, 'index'));
 				}
-
 			// re-index the routed segments array so it starts with 1 rather than 0
 			s('uri')->_reindex_segments();
-			
-			s('console')->log('No URI present. Default controller set.','debug');
 			return;
 			}
 		unset($this->routes['default_controller']);

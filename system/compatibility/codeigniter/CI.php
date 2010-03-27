@@ -185,37 +185,3 @@ function log_message($type,$msg = null)
 		s('console')->log($msg,'CodeIgniter',$type);
 		}
 	}
-function _exception_handler($severity, $message, $filepath, $line)
-	{	
-	 // We don't bother with "strict" notices since they will fill up
-	 // the log file with information that isn't normally very
-	 // helpful.  For example, if you are running PHP 5 and you
-	 // use version 4 style class functions (without prefixes
-	 // like "public", "private", etc.) you'll get notices telling
-	 // you that these have been deprecated.
-	
-	if ($severity == E_STRICT)
-		{
-		return;
-		}
-	
-	$error =& load_class('Exceptions');
-	
-	// Should we display the error?
-	// We'll get the current error_reporting level and add its bits
-	// with the severity bits to find out.
-	
-	if (($severity & error_reporting()) == $severity)
-		{
-		$error->show_php_error($severity, $message, $filepath, $line);
-		}
-	
-	// Should we log the error?  No?  We're done...
-	$config =& get_config();
-	if ($config['log_threshold'] == 0)
-		{
-		return;
-		}
-	
-	$error->log_exception($severity, $message, $filepath, $line);
-	}
