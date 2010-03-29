@@ -1,5 +1,5 @@
 <?php
-class views {
+class views extends library {
 private $data = array();
 private $scope = false;
 	public function view_exists($file)

@@ -1,5 +1,5 @@
 <?php
-class cache extends has_drivers {
+class cache extends library {
 private $drivers = array();
 private $prefix;
 	public function __construct($dummy1,$dummy2)

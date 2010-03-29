@@ -1,5 +1,5 @@
 <?php
-class unit {
+class unit extends library {
 private $active = true;
 private $strict = false;
 private $tests = array();

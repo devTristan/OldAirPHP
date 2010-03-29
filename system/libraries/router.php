@@ -13,7 +13,7 @@
  * @since		Version 1.0
  * @filesource
  */
-class router {
+class router extends library {
 public $config;	
 public $routes = array();
 public $error_routes = array();

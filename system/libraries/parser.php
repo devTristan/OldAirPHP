@@ -1,5 +1,5 @@
 <?php
-class parser extends has_drivers {
+class parser extends library {
 	public function parse($data,$filters,$ext = 'php')
 		{
 		foreach ($filters as $filter)

@@ -1,5 +1,5 @@
 <?php
-class console {
+class console extends library {
 private $error_types = array(
 	'debug','warning','error','fatal error','forced'
 	);

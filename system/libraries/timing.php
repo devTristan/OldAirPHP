@@ -1,5 +1,5 @@
 <?php
-class timing {
+class timing extends library {
 private $times = array();
 	public function play($name)
 		{
@@ -72,14 +72,6 @@ private $times = array();
 				}
 			}
 		return $this;
-		}
-	public function instance($name)
-		{
-		if (!isset($this->instances[$name]))
-			{
-			$this->instances[$name] = new timer($name);
-			}
-		return $this->instances[$name];
 		}
 	public function table()
 		{

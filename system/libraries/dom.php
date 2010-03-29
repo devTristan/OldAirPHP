@@ -34,7 +34,7 @@ define('HDOM_INFO_ENDSPACE', 7);
 
 // simple html dom node
 // -----------------------------------------------------------------------------
-class dom_node {
+class dom_node extends library {
 	public $nodetype = HDOM_TYPE_TEXT;
 	public $tag = 'text';
 	public $attr = array();

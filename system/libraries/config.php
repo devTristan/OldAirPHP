@@ -7,20 +7,20 @@ private $setup = false;
 		{
 		$this->file = $file;
 		$this->set_iterator('conf');
-		$this->setup();
 		if (!defined('CONFIG_LOADED')) {define('CONFIG_LOADED',true);}
 		}
 	private function setup()
 		{
-		if ($this->setup === true) {return;}
+		if ($this->setup === true) {return $this;}
 		$this->setup = true;
 		$this->extend('include',array($this,'_include'));
 		$this->load(DIR_CONFIG.$this->file.EXT);
+		return $this;
 		}
 	public function __get($var)
 		{
 		$this->setup();
-		return isset($this->conf[$var]) ? ((is_object($this->conf[$var]) && get_class($this->conf[$var]) == 'config') ? $this->conf[$var]->conf : $this->conf[$var]) : array();
+		return isset($this->conf[$var]) ? ((is_object($this->conf[$var]) && get_class($this->conf[$var]) == 'config') ? $this->conf[$var]->setup()->conf : $this->conf[$var]) : array();
 		}
 	public function __isset($var)
 		{

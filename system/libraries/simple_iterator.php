@@ -1,5 +1,5 @@
 <?php
-abstract class simple_iterator implements Iterator, Countable {
+abstract class simple_iterator extends library implements Iterator, Countable {
 private $_position = 0;
 private $_iterator_array;	
 	protected function set_iterator($var)

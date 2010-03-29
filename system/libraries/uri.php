@@ -13,7 +13,7 @@
  * @since		Version 1.0
  * @filesource
  */
-class uri {
+class uri extends library {
 	public $keyval = array();
 	public $uri_string;
 	public $segments = array();

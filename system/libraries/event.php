@@ -1,10 +1,10 @@
 <?php
-class event {
+class event extends library {
+private $events = array();
+private $vars = array();
 	public function __construct()
 		{
-		$this->events = array();
-		$this->vars = array();
-		$this->triggered = 0;
+		register_shutdown_function(array($this,'shutdown'));
 		}
 	public function bind($class,$event,$method,$params = array())
 		{
@@ -33,10 +33,6 @@ class event {
 	public function exists($event)
 		{
 		return isset($this->events[$event]);
-		}
-	public function triggered()
-		{
-		return $this->triggered;
 		}
 	public function trigger($event,$params = array())
 		{
@@ -77,13 +73,16 @@ class event {
 					}
 				if ($match == true)
 					{
-					$this->triggered++;
 					$class->$method($params);
 					}
 				}
 			}
 		s('timing')->pause('[event] '.$event);
 		return $this;
+		}
+	public function shutdown()
+		{
+		$this->trigger('shutdown');
 		}
 	private function match($a,$b)
 		{

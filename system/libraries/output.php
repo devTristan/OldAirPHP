@@ -1,5 +1,5 @@
 <?php
-class output {
+class output extends library {
 private $headers = array();
 	public function start()
 		{
