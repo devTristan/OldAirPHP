@@ -76,7 +76,7 @@ public $error_levels = array(
 		//folders: the folders to be put into constants
 		//DIR_APPLICATION should be something like /var/www/application/, and so on
 		$folders = array(
-			'system/application',
+			'system',
 			'system/cache',
 			'system/config',
 			'system/helpers',
@@ -84,6 +84,7 @@ public $error_levels = array(
 			'system/libraries/drivers',
 			'system/logs',
 			'system/compatibility',
+			'application',
 			'application/controllers',
 			'application/models',
 			'application/views',
@@ -93,14 +94,7 @@ public $error_levels = array(
 		
 		foreach ($folders as $folder)
 			{
-			/*$parts = explode('/',$folder);
-			$path = array();
-			foreach ($parts as $part_id => $part)
-				{
-				$path[] = (isset(s('config')->dir) && isset(s('config')->dir[$part])) ? s('config')->dir[$part] : $part; //loff
-				}*/
 			$constant_name = end(explode('/',$folder));
-			//$path = implode('/',$path);
 			define('DIR_'.strtoupper($constant_name),DIR_BASE.$folder.'/');
 			}
 		
