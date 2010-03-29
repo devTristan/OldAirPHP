@@ -5,12 +5,15 @@ define('FRAMEWORK_NAME','Damien');
 define('FRAMEWORK_VERSION',0.7);
 require_once 'system/core/autoload.php';
 require_once 'system/core/functions.php';
+require_once 'system/core/abstracts.php';
 require_once 'system/core/damien.php';
 s('damien');
-$overhead_end = microtime(true);
 s('config');
+$overhead_end = microtime(true);
 s('timing')->play('total')->set('total',$overhead_end-$overhead_start);
 s('timing')->pause('overhead')->set('overhead',$overhead_end-$overhead_start);
+unset($overhead_start);
+unset($overhead_end);
 if (!s('config')->enabled)
 	{
 	show_error(503);
@@ -49,5 +52,4 @@ else
 		s('output')->end();
 		}
 	}
-
-s('event')->trigger('shutdown');
+die();
