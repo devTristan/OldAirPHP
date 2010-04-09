@@ -1,13 +1,13 @@
 <?php
 error_reporting(E_ALL);
 $overhead_start = microtime(true);
-define('FRAMEWORK_NAME','Damien');
+define('FRAMEWORK_NAME','AirPHP');
 define('FRAMEWORK_VERSION',0.7);
 require_once 'system/core/autoload.php';
 require_once 'system/core/functions.php';
 require_once 'system/core/abstracts.php';
-require_once 'system/core/damien.php';
-s('damien');
+require_once 'system/core/airphp.php';
+s('airphp');
 s('config');
 $overhead_end = microtime(true);
 s('timing')->play('total')->set('total',$overhead_end-$overhead_start);
@@ -27,7 +27,7 @@ s('event')->trigger('initialize');
 
 $class = s('router')->fetch_class();
 $method = s('router')->fetch_method();
-damien_autoload('controller_'.$class);
+airphp_autoload('controller_'.$class);
 
 if (s('router')->scaffolding_request === true) //this next bit happily borrowed from codeigniter and ported a bit
 	{

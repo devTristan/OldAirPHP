@@ -2,7 +2,7 @@
 $config = array(
 
 'default_controller' => 'welcome',
-'damien.css' => 'damien/css',
+'airphp.css' => 'airphp/css',
 'scaffolding_trigger' => ''
 
 );

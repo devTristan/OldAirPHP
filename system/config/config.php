@@ -11,7 +11,7 @@ $config = array(
 	'domain' => 'localhost',
 	'port' => 80,
 	'protocol' => 'http',
-	'basedir' => 'public/d2/'
+	'basedir' => 'AirPHP/'
 	),
 
 'permitted_uri_chars' => 'a-z 0-9~%.:_\-',
@@ -44,8 +44,7 @@ $config = array(
 	),
 
 'class_locations' => array(
-	'CI' => 'system/compatibility/codeigniter',
-	'damien' => 'system/core'
+	'CI' => 'system/compatibility/codeigniter'
 	),
 
 'codeigniter' => array(

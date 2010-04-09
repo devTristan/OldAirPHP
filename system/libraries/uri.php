@@ -3,7 +3,7 @@
  * CodeIgniter
  *
  * An open source application development framework for PHP 4.3.2 or newer
- * EXCEPT KIND OF PORTED TO DAMIEN LOLOL.
+ * EXCEPT KIND OF PORTED TO AirPHP LOLOL.
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team

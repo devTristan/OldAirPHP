@@ -1,5 +1,5 @@
 <?php
-class damien {
+class airphp {
 private $error_level = 1;
 public $error_levels = array(
 	'default'		=> 'Error',
@@ -19,8 +19,8 @@ public $error_levels = array(
 	public function __construct()
 		{
 		$this->define_constants();
-		set_error_handler(array($this,'error_handler'));
-		set_exception_handler(array($this,'exception_handler'));
+		//set_error_handler(array($this,'error_handler'));
+		//set_exception_handler(array($this,'exception_handler'));
 		}
 	public function error_name($level)
 		{
@@ -68,7 +68,6 @@ public $error_levels = array(
 		
 		//publicdir: the directory of the public folder, where the entry point is
 		$publicdir = substr($_SERVER['SCRIPT_FILENAME'],0,strrpos($_SERVER['SCRIPT_FILENAME'],'/'));
-		
 		//DIR_BASE: the absolute directory of the base of the framework.
 		//something like /var/www/
 		define('DIR_BASE',substr($publicdir,0,strrpos($publicdir,'/')).'/');

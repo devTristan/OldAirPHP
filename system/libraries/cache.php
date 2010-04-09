@@ -5,7 +5,7 @@ private $prefix;
 	public function __construct($dummy1,$dummy2)
 		{
 		$args = func_get_args();
-		$this->prefix = 'damien_'.array_shift($args).'_';
+		$this->prefix = 'airphp_'.array_shift($args).'_';
 		if (count($args) == 1 && is_array($args[0])) {$args = $args[0];}
 		$this->drivers = $args;
 		}

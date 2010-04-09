@@ -2,7 +2,7 @@
 <head>
 <title><?php echo $heading; ?></title>
 <style type="text/css">
-<?php s('views')->include_view('damien'); ?>
+<?php s('views')->include_view('airphp_style'); ?>
 </style>
 </head>
 <body>

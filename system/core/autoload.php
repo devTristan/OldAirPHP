@@ -1,5 +1,5 @@
 <?php
-function damien_autoload($class)
+function airphp_autoload($class)
 	{
 	$checked = array();
 	$folders = array('system/libraries');
@@ -30,7 +30,7 @@ function damien_autoload($class)
 					{
 					foreach (s('config')->classtypes[$type]['required'] as $needed)
 						{
-						damien_autoload($needed);
+						airphp_autoload($needed);
 						}
 					}
 				if (isset(s('config')->classtypes[$type]['autoload_folders']))
@@ -78,4 +78,4 @@ function damien_autoload($class)
 		show_error($str);
 		}
 	}
-spl_autoload_register('damien_autoload');
+spl_autoload_register('airphp_autoload');

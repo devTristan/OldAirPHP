@@ -2,7 +2,7 @@
 <head>
 <title>Welcome to <var>FRAMEWORK_NAME.' '.FRAMEWORK_VERSION</var></title>
 <style type="text/css">
-<include src="damien"/>
+<include src="airphp_style"/>
 </style>
 </head>
 <body>
