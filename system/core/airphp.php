@@ -98,7 +98,12 @@ public $error_levels = array(
 			}
 		
 		//URL: everything in REQUEST_URI minus the basedir as defined in the configuration
-		define('URL',substr($_SERVER['REQUEST_URI'],strlen(s('config')->host['basedir'])+1));
+		$url = substr($_SERVER['REQUEST_URI'],strlen(s('config')->host['basedir'])+1);
+		if (substr_count($url,'?'))
+			{
+			$url = substr($url,0,strpos($url,'?'));
+			}
+		define('URL',$url);
 		
 		//URL_BASE: the relative path to the base directory for use in views
 		//If the URL is "cake", URL_BASE will be "./". If the URL is "cake/14", URL_BASE will be ../
