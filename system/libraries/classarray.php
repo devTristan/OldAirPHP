@@ -1,6 +1,5 @@
 <?php
 abstract class classarray extends library implements Iterator, Countable, ArrayAccess {
-private $_pointer = 0;
 private $_array;
 	protected function set_array(&$array)
 		{
@@ -24,7 +23,7 @@ private $_array;
 		}
 	public function valid()
 		{
-		return isset(key($this->_array));
+		return (key($this->_array) !== null);
 		}
 	public function count()
 		{
