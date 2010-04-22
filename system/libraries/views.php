@@ -23,6 +23,7 @@ private $scope = false;
 			show_error('View not found: '.$file);
 			}
 		$file = substr($files[0],strrpos($files[0],'/')+1);
+		$viewfile = DIR_BASE.$files[0];
 		unset($files);
 		if (count(explode('.',$file)) != 2)
 			{
@@ -59,6 +60,6 @@ private $scope = false;
 					: s('config')->mimes['_default']);
 			}
 		unset($header);
-		include((($parsed) ? DIR_CACHE.'view_' : DIR_VIEWS).$folder.$file);
+		include((($parsed) ? DIR_CACHE.'view_'.$folder.$file : $viewfile));
 		}
 }
