@@ -1,12 +1,12 @@
 <?php
-class config extends simple_iterator {
+class config extends classarray {
 private $functions = array();
 public $conf = array();
 private $setup = false;
 	public function __construct($file = 'config')
 		{
 		$this->file = $file;
-		$this->set_iterator('conf');
+		$this->set_array($this->conf);
 		if (!defined('CONFIG_LOADED')) {define('CONFIG_LOADED',true);}
 		}
 	private function setup()
