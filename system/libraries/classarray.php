@@ -41,7 +41,7 @@ private $_array;
 		{
 		$this->_array[$offset] = $value;
 		}
-	public function offsetUnset($offset,$value)
+	public function offsetUnset($offset)
 		{
 		unset($this->_array[$offset]);
 		}	
