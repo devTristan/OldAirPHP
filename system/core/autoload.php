@@ -2,7 +2,7 @@
 function airphp_autoload($class)
 	{
 	$checked = array();
-	$folders = array('system/libraries');
+	$folders = array('system/libraries','system/helpers');
 	if (defined('CONFIG_LOADED'))
 		{
 		$folders = (s('config')->autoload_folders) ? array_merge($folders,s('config')->autoload_folders) : $folders;
