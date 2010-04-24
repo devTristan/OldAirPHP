@@ -211,5 +211,5 @@ private $owner;
 		return file_get_contents($this->location);
 		}
 	public function move($path){$this->location($path);}
-	public function chmod($mode){$this->mode($mode)}
+	public function chmod($mode){$this->mode($mode);}
 }
