@@ -8,8 +8,12 @@ private $mimetype;
 private $group;
 private $mode;
 private $owner;
-	public function __construct($location,$name = null)
+	public function __construct($location = null,$name = null)
 		{
+		if ($location === null)
+			{
+			$location = tempnam(sys_get_temp_dir());
+			}
 		$this->_location = $location;
 		if ($name)
 			{
@@ -26,6 +30,7 @@ private $owner;
 		}
 	public function __call($method,$args)
 		{
+		if (substr($method,0,4) == 'get_' || substr($method,0,4) == 'set_') {return null;}
 		if ($args)
 			{
 			if (!method_exists($this,'set_'.$method))
@@ -87,13 +92,13 @@ private $owner;
 		
 	public function get_extension()
 		{
-		return $this->extension = substr($this->name(),strrpos($this->name,'.')+1);
+		return $this->extension = substr($this->name(),strrpos($this->name(),'.')+1);
 		}
 	public function set_extension($ext)
 		{
-		$this->name = substr($this->name,0,strrpos($this->name,'.')+1).$ext;
+		$this->name = substr($this->name(),0,strrpos($this->name(),'.')+1).$ext;
 		$this->mimetype = null;
-		$this->location = $this->folder.$this->name;
+		$this->location = $this->folder().$this->name();
 		}
 		
 	public function get_mimetype()
@@ -206,4 +211,5 @@ private $owner;
 		return file_get_contents($this->location);
 		}
 	public function move($path){$this->location($path);}
+	public function chmod($mode){$this->mode($mode)}
 }
