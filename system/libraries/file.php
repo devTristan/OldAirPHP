@@ -15,7 +15,7 @@ private $owner;
 			$location = tempnam(sys_get_temp_dir());
 			}
 		$this->_location = $location;
-		if ($name)
+		if ($name !== null)
 			{
 			$this->name = $name;
 			}
@@ -204,6 +204,10 @@ private $owner;
 	public function inode()
 		{
 		return fileinode($this->location);
+		}
+	public function realpath()
+		{
+		return realpath($this->location);
 		}
 	
 	public function __toString()
