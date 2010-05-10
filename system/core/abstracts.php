@@ -16,9 +16,9 @@ abstract class library extends base {
 private $_driver_cache = array();
 	public function driver($name)
 		{
-		if (isset($this->_driver_cache[$name])) {return $this->_driver_cache[$name];}
 		$thisclass = get_class($this);
 		$driverclass = $thisclass.'_'.$name;
+		if (isset(classmanager::$drivers[$driverclass])) {return classmanager::$drivers[$driverclass];}
 		$dir = (isset($this->driverFolder)) ? $this->driverFolder : DIR_LIBRARIES.'drivers/';
 		if (!class_exists($driverclass,false))
 			{
@@ -35,12 +35,12 @@ private $_driver_cache = array();
 			{
 			s($driverclass)->driverFolder = $dir.((isset($this->driverParent)) ? get_class($this->driverParent) : $thisclass).'/';
 			s($driverclass)->driverParent = $name;
-			$this->_driver_cache[$name] = s($driverclass);
+			classmanager::$drivers[$driverclass] = s($driverclass);
 			return s($driverclass);
 			}
 		else
 			{
-			$this->_driver_cache[$name] = false;
+			classmanager::$drivers[$driverclass] = false;
 			return false;
 			}
 		}

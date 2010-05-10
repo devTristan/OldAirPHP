@@ -2,6 +2,7 @@
 class classmanager extends library {
 static private $instances = array();
 static private $cache_compatibility_type = array();
+static public $drivers = array();
 	static public function single($args)
 		{
 		$id = sha1(serialize($args));
