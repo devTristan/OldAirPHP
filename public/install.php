@@ -65,9 +65,9 @@ else
 		{
 		$error[] = 'directory system/storage is not writable.';
 		}
-	if (!is_writable('../system/config/'))
+	if (!is_writable('../system/config/config.php'))
 		{
-		$error[] = 'directory system/config is not writable.';
+		$error[] = 'file system/config/config.php is not writable.';
 		}
 	if (version_compare(PHP_VERSION, '5.3.0') < 0)
 		{
