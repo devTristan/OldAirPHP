@@ -33,7 +33,7 @@ private $_driver_cache = array();
 			}
 		if (class_exists($driverclass,false))
 			{
-			s($driverclass)->driverFolder = $dir.((isset($this->driverParent)) ? get_class($this->driverParent) : $thisclass).'/';
+			s($driverclass)->driverFolder = $dir.((isset($this->driverParent)) ? $this->driverParent : $thisclass).'/';
 			s($driverclass)->driverParent = $name;
 			classmanager::$drivers[$driverclass] = s($driverclass);
 			return s($driverclass);

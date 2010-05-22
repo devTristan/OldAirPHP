@@ -11,7 +11,7 @@ $config = array(
 	'domain' => 'localhost',
 	'port' => 80,
 	'protocol' => 'http',
-	'basedir' => 'AirPHP/'
+	'basedir' => 'tmp/AirPHP/'
 	),
 
 'permitted_uri_chars' => 'a-z 0-9~%.:_\-',
