@@ -44,7 +44,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 		$password = sha1($_POST['password']);
 		$filestr = $username."\n".$password;
 		file_put_contents('../system/storage/cp_pwd',$filestr);
-		
+		mkdir('../system/storage/cache',0777,true);
 		$protocol = ($_SERVER['HTTPS']) ? 'https' : 'http';
 		$domain = $_SERVER['SERVER_NAME'];
 		$port = $_SERVER['SERVER_PORT'];
