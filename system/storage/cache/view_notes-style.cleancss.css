@@ -1,0 +1,40 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+}
+body {
+	background-color: #fff;
+	font-family: sans-serif;
+	font-size: 0.9em;
+}
+body .template {
+	display: none;
+}
+body .loginbox {
+	text-align: center;
+	font-size: 1.5em;
+	margin-top: 100px;
+}
+body .loginbox label {
+	display: block;
+	margin-bottom: 5px;
+}
+body .loginbox input {
+	border: 1px solid #555;
+	background-color: #eee;
+	border-radius: 7px;
+	font-size: 1em;
+	margin-bottom: 5px;;
+	padding: 3px;
+}
+body .loginbox input:-webkit-autofill {
+	background-color: #eee !important;
+}
+body .loginbox input#loginbutton {
+	font-size: 0.5em;
+}
+body .loginbox input:focus {
+	background-color: #ddd;
+}

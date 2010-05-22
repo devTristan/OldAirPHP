@@ -16,6 +16,7 @@ private $scope = false;
 	public function include_view($file,$header = false)
 		{
 		$folder = substr($file,0,strrpos($file,'/')).'/';
+		$prettyfolder = str_replace('/','-',$folder);
 		if ($folder == '/') {$folder = '';}
 		$files = glob("application/views/$file.*");
 		if (!$files || !isset($files[0]))
@@ -24,15 +25,14 @@ private $scope = false;
 			}
 		$file = substr($files[0],strrpos($files[0],'/')+1);
 		$viewfile = DIR_BASE.$files[0];
-		unset($files);
 		if (count(explode('.',$file)) != 2)
 			{
-			if (!file_exists(DIR_CACHE.'view_'.$file) || filemtime(DIR_CACHE.'view_'.$file) <= filemtime('application/views/'.$file))
+			if (!file_exists(DIR_CACHE.'view_'.$prettyfolder.$file) || filemtime(DIR_CACHE.'view_'.$prettyfolder.$file) <= filemtime($viewfile))
 				{
-				$parsed = s('parser')->parsefile('application/views/'.$file);
+				$parsed = s('parser')->parsefile($viewfile);
 				if ($parsed !== false)
 					{
-					file_put_contents(DIR_CACHE.'view_'.$file,$parsed);
+					file_put_contents(DIR_CACHE.'view_'.$prettyfolder.$file,$parsed);
 					$parsed = true;
 					}
 				}
@@ -60,6 +60,6 @@ private $scope = false;
 					: s('config')->mimes['_default']);
 			}
 		unset($header);
-		include((($parsed) ? DIR_CACHE.'view_'.$folder.$file : $viewfile));
+		include((($parsed) ? DIR_CACHE.'view_'.$prettyfolder.$file : $viewfile));
 		}
 }

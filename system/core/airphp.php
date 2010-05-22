@@ -76,7 +76,8 @@ public $error_levels = array(
 		//DIR_APPLICATION should be something like /var/www/application/, and so on
 		$folders = array(
 			'system',
-			'system/cache',
+			'system/storage',
+			'system/storage/cache',
 			'system/config',
 			'system/helpers',
 			'system/libraries',
