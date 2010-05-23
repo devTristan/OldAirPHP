@@ -33,7 +33,7 @@ text-align: center;
 <p>Thank you for choosing AirPHP!</p>
 
 <?php
-$error = array();
+$error = $shell = array();
 if (isset($_POST['username']) && isset($_POST['password']))
 	{
 	include('../system/helpers/str.php');
@@ -44,7 +44,6 @@ if (isset($_POST['username']) && isset($_POST['password']))
 		$password = sha1($_POST['password']);
 		$filestr = $username."\n".$password;
 		file_put_contents('../system/storage/cp_pwd',$filestr);
-		mkdir('../system/storage/cache',0777,true);
 		$protocol = ($_SERVER['HTTPS']) ? 'https' : 'http';
 		$domain = $_SERVER['SERVER_NAME'];
 		$port = $_SERVER['SERVER_PORT'];
@@ -55,19 +54,21 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			"'host' => array(\n\t'domain' => '$domain',\n\t'port' => $port,\n\t'protocol' => '$protocol',\n\t'basedir' => '$basedir'\n\t),"
 			,$config);
 		file_put_contents('../system/config/config.php',$config);
-		
-		$error[] = 'Congratulations, AirPHP has been installed successfully! <a href="./">Click Here</a>';
+		$error[] = 'Congratulations, AirPHP has been installed successfully! Now go delete public/install.php';
 		}
 	}
 else
 	{
+	$dir = substr(__FILE__,0,-18);
 	if (!is_writable('../system/storage/'))
 		{
 		$error[] = 'directory system/storage is not writable.';
+		$shell[] = 'chmod 777 system/storage -R';
 		}
 	if (!is_writable('../system/config/config.php'))
 		{
 		$error[] = 'file system/config/config.php is not writable.';
+		$shell[] = 'chmod 777 system/config/config.php -R';
 		}
 	if (version_compare(PHP_VERSION, '5.3.0') < 0)
 		{
@@ -75,7 +76,7 @@ else
 		}
 	}
 
-if ($error) {echo '<p>',implode('<br/>',$error),'</p>';} else { ?>
+if ($error) {echo '<p>',implode('<br/>',$error),'</p>'; if ($shell) {echo '<code>cd ',$dir,'<br/>',implode('<br/>',$shell),'</code>';}} else { ?>
 <p>Please choose a username and password. In future you will use them to access the control panel.</p>
 <form action="install.php" method="post">
 	<label for="username">Username:</label><br/><input type="text" id="username" name="username"/><br/>
