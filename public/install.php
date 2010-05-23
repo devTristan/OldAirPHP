@@ -68,7 +68,7 @@ else
 	if (!is_writable('../system/config/config.php'))
 		{
 		$error[] = 'file system/config/config.php is not writable.';
-		$shell[] = 'chmod 777 system/config/config.php -R';
+		$shell[] = 'chmod 777 system/config/config.php';
 		}
 	if (version_compare(PHP_VERSION, '5.3.0') < 0)
 		{
