@@ -54,6 +54,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			"'host' => array(\n\t'domain' => '$domain',\n\t'port' => $port,\n\t'protocol' => '$protocol',\n\t'basedir' => '$basedir'\n\t),"
 			,$config);
 		file_put_contents('../system/config/config.php',$config);
+		@mkdir('../system/storage/cache',777,true);
 		$error[] = 'Congratulations, AirPHP has been installed successfully! Now go delete public/install.php';
 		}
 	}
